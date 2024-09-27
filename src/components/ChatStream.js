@@ -262,6 +262,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { ArrowRight } from "lucide-react";
 import CodeBlock from './CodeBlock'; // Assuming you have a CodeBlock component
 import Sidebar from './Sidebar'; // Assuming you have a Sidebar component
+import useAutosizeTextArea from '@/hooks/useAutosizeTextArea';
 
 function ChatStream() {
   const [messages, setMessages] = useState([]);
@@ -405,17 +406,21 @@ function ChatStream() {
     return parts;
   };
 
+  const textAreaRef = useRef(null);
+
+  useAutosizeTextArea(textAreaRef.current, input);
+
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden">
+    <div className="flex flex-col h-screen w-screen overflow-hidden bg-gray-100 ">
       <Sidebar />
-      <div className="flex justify-center flex-1 overflow-hidden bg-gray-100 pt-8">
-        <ScrollArea className="flex-1 max-w-3xl h-full p-4 bg-white rounded-md shadow-md m-4">
-          <div className="space-y-4">
+      <div className="flex justify-center flex-1 overflow-hidden pt-8">
+        <ScrollArea className="flex-1 max-w-3xl h-full bg-white rounded-[24px] shadow m-4">
+          <div className="space-y-4 p-4">
             {messages.map((msg, index) => (
               <div 
                 key={index} 
-                className={`p-3 rounded-lg max-w-[70%] ${
-                  msg.role === 'user' ? 'ml-auto bg-teal-100' : 'mr-auto bg-gray-100'
+                className={`p-3 rounded-2xl max-w-[70%] ${
+                  msg.role === 'user' ? 'ml-auto bg-teal-100 rounded-br-none' : 'mr-auto bg-gray-100 rounded-bl-none'
                 }`}
               >
                 <p>{renderMessage(msg.content)}</p>
@@ -433,18 +438,36 @@ function ChatStream() {
           </div>
         </ScrollArea>
       </div>
-      <form onSubmit={handleSubmit} className="p-4 bg-white border-t border-gray-200">
-        <div className="flex max-w-3xl mx-auto space-x-3 items-end">
+      <form onSubmit={handleSubmit} className="pb-4">
+        <div className="flex max-w-3xl mx-auto space-x-3 items-end rounded-[28px] bg-white p-2 shadow">
           <Textarea
             value={input}
+            ref={textAreaRef}
+            rows={1}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="min-h-[40px] max-h-[200px] resize-none overflow-y-auto flex-1"
+            className="min-h-[40px] max-h-[200px] resize-none overflow-y-auto flex-1 outline-none border-none rounded-[22px] ring-0 px-4 text-base"
+            
           />
-          <Button type="submit" disabled={isLoading}>
+          <Button type="submit" disabled={isLoading} className={"rounded-full"}>
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
+        {/* <div className='relative'>
+          <Textarea
+            value={input}
+            ref={textAreaRef}
+            rows={1}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type your message..."
+            className="min-h-[40px] max-h-[200px] resize-none overflow-y-auto flex-1 outline-none border-none rounded-[3rem] max-w-3xl mx-auto pr-12"
+
+          >
+          </Textarea>
+          <Button type="submit" disabled={isLoading} className={"absolute top-0 left-0 max-w-3xl mx-auto rounded-full"}>
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </div> */}
       </form>
     </div>
     // <div className="flex h-screen bg-gray-100">
