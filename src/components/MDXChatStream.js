@@ -209,9 +209,14 @@ function MDXChatStream() {
             ref={textAreaRef}
             rows={1}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit(e); // Manually trigger submit when Enter is pressed
+              }
+            }}
             placeholder="Type your message..."
             className="min-h-[40px] max-h-[200px] resize-none overflow-y-auto flex-1 outline-none border-none rounded-[22px] ring-0 px-4 text-base"
-            
           />
           <Button type="submit" disabled={isLoading} className={"rounded-full"}>
             
