@@ -182,7 +182,7 @@ function Sidebar() {
     { href: '/', label: 'Home', icon: Home },
     { href: '/chat-stream', label: 'Chat', icon: MessageSquare },
     { href: '/mdx-chat', label: 'MDX Writer', icon: Edit },
-    { href: '/settings', label: 'Settings', icon: Settings },
+    // { href: '/settings', label: 'Settings', icon: Settings },
   ];
 
   const SidebarContent = ({ onClose }) => (
