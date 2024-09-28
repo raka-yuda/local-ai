@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Box, VStack, Textarea, Text, Flex, HStack, IconButton } from "@chakra-ui/react";
+// import { Box, VStack, Text, Flex, HStack, IconButton } from "@chakra-ui/react";
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import Sidebar from './Sidebar';
+import { Textarea } from "@/components/ui/textarea";
+import useAutosizeTextArea from '@/hooks/useAutosizeTextArea';
+import { Button } from './ui/button';
+import { ArrowRight, Loader } from 'lucide-react';
 
 function MDXChatStream() {
   const [messages, setMessages] = useState([]);
@@ -96,74 +100,129 @@ function MDXChatStream() {
 
   const renderMessage = (content) => {
     const parts = content.split('\n').map((part, index) => (
-      <Text key={index} whiteSpace="pre-wrap">{part}</Text>
+      <p key={index} whiteSpace="pre-wrap">{part}</p>
     ));
     return parts;
   };
 
+  const textAreaRef = useRef(null);
+
+  useAutosizeTextArea(textAreaRef.current, input);
+
   return (
-    <Flex direction="column" h="100vh" w="100vw" overflow="hidden">
+    // <Flex direction="column" h="100vh" w="100vw" overflow="hidden">
+    //   <Sidebar />
+    //   <Flex justify="center" flex={1} overflow="hidden" bg="gray.100" pt={8}>
+    //     <VStack 
+    //       flex={1} 
+    //       maxW="800px" 
+    //       h="100%" 
+    //       overflowY="auto" 
+    //       spacing={4} 
+    //       p={4} 
+    //       alignItems="stretch"
+    //       bg="white"
+    //       borderRadius="md"
+    //       boxShadow="md"
+    //       m={4}
+    //     >
+    //       {messages.map((msg, index) => (
+    //         <Box 
+    //           key={index} 
+    //           alignSelf={msg.role === 'user' ? 'flex-end' : 'flex-start'}
+    //           bg={msg.role === 'user' ? 'teal.100' : 'gray.100'}
+    //           p={3}
+    //           borderRadius="lg"
+    //           maxW="70%"
+    //         >
+    //           {renderMessage(msg.content)}
+    //         </Box>
+    //       ))}
+    //       {/* {streamingMessage && (
+    //         <Box alignSelf="flex-start" bg="gray.100" p={3} borderRadius="lg" maxW="70%">
+    //           {renderMessage(streamingMessage)}
+    //         </Box>
+    //       )} */}
+    //       <div ref={messagesEndRef} />
+    //     </VStack>
+    //   </Flex>
+    //   <Box as="form" onSubmit={handleSubmit} p={4} bg="white" borderTop="1px" borderColor="gray.200">
+    //     <HStack maxW="800px" mx="auto" spacing={3} alignItems="flex-end">
+    //       <Textarea
+    //         value={input}
+    //         onChange={(e) => setInput(e.target.value)}
+    //         placeholder="Type your message..."
+    //         size="md"
+    //         borderRadius="md"
+    //         minH="40px"
+    //         maxH="200px"
+    //         resize="none"
+    //         overflowY="auto"
+    //         flex={1}
+    //       />
+    //       <IconButton
+    //         type="submit"
+    //         icon={<ArrowForwardIcon />}
+    //         isLoading={isLoading}
+    //         colorScheme="teal"
+    //         size="md"
+    //         borderRadius="md"
+    //         aria-label="Send message"
+    //       />
+    //     </HStack>
+    //   </Box>
+    // </Flex>
+    <div className="flex flex-col h-screen w-screen overflow-hidden bg-gray-100 ">
       <Sidebar />
-      <Flex justify="center" flex={1} overflow="hidden" bg="gray.100" pt={8}>
-        <VStack 
-          flex={1} 
-          maxW="800px" 
-          h="100%" 
-          overflowY="auto" 
-          spacing={4} 
-          p={4} 
-          alignItems="stretch"
-          bg="white"
-          borderRadius="md"
-          boxShadow="md"
-          m={4}
-        >
-          {messages.map((msg, index) => (
-            <Box 
-              key={index} 
-              alignSelf={msg.role === 'user' ? 'flex-end' : 'flex-start'}
-              bg={msg.role === 'user' ? 'teal.100' : 'gray.100'}
-              p={3}
-              borderRadius="lg"
-              maxW="70%"
-            >
-              {renderMessage(msg.content)}
-            </Box>
-          ))}
-          {/* {streamingMessage && (
-            <Box alignSelf="flex-start" bg="gray.100" p={3} borderRadius="lg" maxW="70%">
-              {renderMessage(streamingMessage)}
-            </Box>
-          )} */}
-          <div ref={messagesEndRef} />
-        </VStack>
-      </Flex>
-      <Box as="form" onSubmit={handleSubmit} p={4} bg="white" borderTop="1px" borderColor="gray.200">
-        <HStack maxW="800px" mx="auto" spacing={3} alignItems="flex-end">
+      <div className="flex justify-center flex-1 overflow-y-auto">
+        <div className="flex flex-1 max-w-3xl bg-white rounded-[24px] shadow m-4 overflow-y-auto min-h-0 pb-4">
+          <div className="flex flex-col p-4 pb-4 w-full h-full">
+            {messages.map((msg, index) => (
+              <div 
+                key={index} 
+                className={`p-3 rounded-2xl max-w-[70%] my-2 ${
+                  msg.role === 'user' ? 
+                    'ml-auto bg-primary rounded-br-none text-white' : 
+                    'mr-auto bg-gray-100 rounded-bl-none'
+                }`}
+              >
+                {/* <p>{renderMessage(msg.content)}</p> */}
+                <p>{renderMessage(msg.content)}</p>
+              </div>
+            ))}
+            {isLoading && (
+              <div className="p-3 rounded-lg bg-gray-100 rounded-bl-none flex max-w-[70%]">
+                <p className="italic text-gray-500">
+                  Assistant is typing
+                  <span className="animate-pulse">...</span>
+                </p>
+              </div>
+            )}
+            <div ref={messagesEndRef} className='mb-4'/>
+          </div>
+        </div>
+      </div>
+      <form onSubmit={handleSubmit} className="pb-4 px-4">
+        <div className="flex max-w-3xl mx-auto space-x-3 items-end rounded-[28px] bg-white p-2 shadow">
           <Textarea
             value={input}
+            ref={textAreaRef}
+            rows={1}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            size="md"
-            borderRadius="md"
-            minH="40px"
-            maxH="200px"
-            resize="none"
-            overflowY="auto"
-            flex={1}
+            className="min-h-[40px] max-h-[200px] resize-none overflow-y-auto flex-1 outline-none border-none rounded-[22px] ring-0 px-4 text-base"
+            
           />
-          <IconButton
-            type="submit"
-            icon={<ArrowForwardIcon />}
-            isLoading={isLoading}
-            colorScheme="teal"
-            size="md"
-            borderRadius="md"
-            aria-label="Send message"
-          />
-        </HStack>
-      </Box>
-    </Flex>
+          <Button type="submit" disabled={isLoading} className={"rounded-full"}>
+            
+            {!isLoading 
+              ? <ArrowRight className="h-4 w-4" /> 
+              : <Loader className="h-4 w-4 animate-spin"/>
+            }
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 }
 
