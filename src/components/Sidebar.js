@@ -257,16 +257,22 @@ function Sidebar() {
       <Sheet>
         <SheetTrigger asChild className='fixed top-4 z-50 flex md:p-2 p-0'>
           <Button className="rounded-none rounded-e-md outline">
-            <ChevronRight className='w-4 h-4 '/>
+            <ChevronRight className='w-4 h-4'/>
            </Button>
         </SheetTrigger>
         <SheetContent side={"left"} className={"flex flex-col"}>
+          {/* <div className='absolute top-0 left-0'>
+            <Button className="rounded-none rounded-e-md outline">
+              <ChevronRight className='w-4 h-4 '/>
+            </Button>
+          </div> */}
           <SheetHeader>
             <SheetTitle>Assistant</SheetTitle>
             <SheetDescription>
               We're here to help your any randomness and lead you to the right way.
             </SheetDescription>
           </SheetHeader>
+          
           <div className="flex flex-col flex-1">
             <nav className="space-y-1">
               {navItems.map((item) => (
@@ -283,14 +289,21 @@ function Sidebar() {
               ))}
             </nav>
           </div>
-          <SheetFooter className={"flex border-t py-4"}>
+          {/* <SheetFooter className={"flex border-t py-4"}>
             <SheetClose asChild>
                 <Button variant="outline" className="w-full" onClick={() => console.log('Help clicked')}>
                   <Info className="mr-2 h-4 w-4" />
                   Help & Resources
                 </Button>
             </SheetClose>
-          </SheetFooter>
+          </SheetFooter> */}
+          <div className='absolute top-4 md:-right-[34px] -right-[18px] '>
+            <SheetClose asChild>
+              <Button className="rounded-none rounded-e-md flex md:p-2 p-0">
+                <ChevronRight className='w-4 h-4 '/>
+              </Button>
+            </SheetClose>
+          </div>
         </SheetContent>
       </Sheet>
       {/* <div className="grid grid-cols-2 gap-2">
