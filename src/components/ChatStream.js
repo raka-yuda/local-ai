@@ -246,7 +246,6 @@ function ChatStream() {
                     'mr-auto bg-gray-100 rounded-bl-none'
                 }`}
               >
-                {/* <p>{renderMessage(msg.content)}</p> */}
                 <p>{renderMessage(msg.content)}</p>
               </div>
             ))}
@@ -272,7 +271,7 @@ function ChatStream() {
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
-                handleSubmit(e); // Manually trigger submit when Enter is pressed
+                handleSubmit(e); 
               }
             }}
             placeholder="Type your message..."
