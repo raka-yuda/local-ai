@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-// import { Box, VStack, Text, Flex, HStack, IconButton } from "@chakra-ui/react";
-import { ArrowForwardIcon } from '@chakra-ui/icons';
 import Sidebar from './Sidebar';
 import { Textarea } from "@/components/ui/textarea";
 import useAutosizeTextArea from '@/hooks/useAutosizeTextArea';
