@@ -1,10 +1,5 @@
 import "@/styles/globals.css";
-import { ChakraProvider } from '@chakra-ui/react';
-import Navbar from '../components/Navbar';
-// pages/_app.tsx or _app.jsx
-import "@/styles/globals.css"; // Import your global styles
 import localFont from "next/font/local";
-import theme from "@/styles/theme";
 
 const geistSans = localFont({
   src: "../styles/fonts/GeistVF.woff",
@@ -20,10 +15,7 @@ const geistMono = localFont({
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider className={`${geistSans.variable} ${geistMono.variable}`}>
-      {/* <Navbar /> */}
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <Component {...pageProps} />
   );
 }
 
