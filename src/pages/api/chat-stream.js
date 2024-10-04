@@ -46,7 +46,7 @@ export default async function handler(req, res) {
         break;
       }
       const chunk = decoder.decode(value);
-      console.log('Chunk received:', chunk);
+      
       res.write(chunk);
     }
 
