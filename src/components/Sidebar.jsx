@@ -103,7 +103,7 @@ function Sidebar() {
     </Button> */}
       <Sheet>
         <SheetTrigger asChild className='fixed top-4 z-50 flex md:p-2 p-0'>
-          <Button className="rounded-none rounded-e-md outline">
+          <Button className="rounded-none rounded-e-lg outline">
             <ChevronRight className='w-4 h-4'/>
            </Button>
         </SheetTrigger>
@@ -116,7 +116,7 @@ function Sidebar() {
           <SheetHeader>
             <SheetTitle>Assistant</SheetTitle>
             <SheetDescription>
-              We're here to help your any randomness and lead you to the right way.
+              {"We're here to help your any randomness and lead you to the right way."}
             </SheetDescription>
           </SheetHeader>
           
