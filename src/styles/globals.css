@@ -2,24 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  font-family: var(--font-geist-sans);
-} */
-
-/* You can target specific elements if you want to use the mono font */
-/* code, pre {
-  font-family: var(--font-geist-mono);
-} */
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
-
 @layer base {
   :root {
     --background: 0 0% 100%;
