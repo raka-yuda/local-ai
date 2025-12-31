@@ -34,7 +34,10 @@ function MDXChatStream() {
       const response = await fetch('/api/chat-stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: input }),
+        body: JSON.stringify({
+          provider: "anthropic",
+          message: input 
+        }),
       });
 
       if (!response.ok) {
